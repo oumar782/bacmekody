@@ -3,6 +3,7 @@ import pool from "../db.js";
 
 const router = express.Router();
 
+
 /* -------------------------
    CRUD UTILISATEURS (login)
 -------------------------- */
@@ -21,7 +22,7 @@ router.post("/utilisateurs", async (req, res) => {
   }
 });
 
-// 🔑 Connexion simple
+// 🔑 Connexion
 router.post("/login", async (req, res) => {
   try {
     const { courriel, mot_de_passe } = req.body;
@@ -49,7 +50,7 @@ router.get("/utilisateurs", async (req, res) => {
   }
 });
 
-// 📖 Lire un utilisateur
+// 📖 Lire un utilisateur par ID
 router.get("/utilisateurs/:id", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM utilisateurs WHERE id = $1", [
@@ -86,15 +87,15 @@ router.delete("/utilisateurs/:id", async (req, res) => {
 });
 
 /* -------------------------
-   CRUD CONTACTS (contact-mekody)
+   CRUD CONTACTS (contact_mekody)
 -------------------------- */
 
 // ➕ Ajouter un contact
-router.post("/contacts", async (req, res) => {
+router.post("/contact_mekody", async (req, res) => {
   try {
     const { nom, email, message } = req.body;
     const result = await pool.query(
-      "INSERT INTO contacts (nom, email, message) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO contact_mekody (nom, email, message) VALUES ($1, $2, $3) RETURNING *",
       [nom, email, message]
     );
     res.json(result.rows[0]);
@@ -104,19 +105,19 @@ router.post("/contacts", async (req, res) => {
 });
 
 // 📖 Lire tous les contacts
-router.get("/contacts", async (req, res) => {
+router.get("/contact_mekody", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM contacts");
+    const result = await pool.query("SELECT * FROM contact_mekody");
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 📖 Lire un contact
-router.get("/contacts/:id", async (req, res) => {
+// 📖 Lire un contact par ID
+router.get("/contact_mekody/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM contacts WHERE id = $1", [
+    const result = await pool.query("SELECT * FROM contact_mekody WHERE id = $1", [
       req.params.id,
     ]);
     res.json(result.rows[0]);
@@ -126,11 +127,11 @@ router.get("/contacts/:id", async (req, res) => {
 });
 
 // ✏️ Modifier un contact
-router.put("/contacts/:id", async (req, res) => {
+router.put("/contact_mekody/:id", async (req, res) => {
   try {
     const { nom, email, message } = req.body;
     const result = await pool.query(
-      "UPDATE contacts SET nom = $1, email = $2, message = $3 WHERE id = $4 RETURNING *",
+      "UPDATE contact_mekody SET nom = $1, email = $2, message = $3 WHERE id = $4 RETURNING *",
       [nom, email, message, req.params.id]
     );
     res.json(result.rows[0]);
@@ -140,9 +141,9 @@ router.put("/contacts/:id", async (req, res) => {
 });
 
 // 🗑️ Supprimer un contact
-router.delete("/contacts/:id", async (req, res) => {
+router.delete("/contact_mekody/:id", async (req, res) => {
   try {
-    await pool.query("DELETE FROM contacts WHERE id = $1", [req.params.id]);
+    await pool.query("DELETE FROM contact_mekody WHERE id = $1", [req.params.id]);
     res.json({ message: "Contact supprimé ✅" });
   } catch (err) {
     res.status(500).json({ error: err.message });
