@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./db.js"; // Import de la connexion DB
-import CalendriersRouter from './complet/complet.js';
+import complet from './completbac/mekody.js';
+
+
 dotenv.config();
 
 const app = express();
@@ -22,7 +24,7 @@ app.use(
 
 // Middleware pour parser JSON
 app.use(express.json());
-app.use('/api/mekody', CalendriersRouter);
+app.use('/api/mekody', complet);
 // 📄 Route racine
 app.get("/", (req, res) => {
   res.send("✅ Serveur backend en marche");

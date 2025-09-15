@@ -3,7 +3,6 @@ import pool from "../db.js";
 
 const router = express.Router();
 
-
 /* -------------------------
    CRUD UTILISATEURS (login)
 -------------------------- */
