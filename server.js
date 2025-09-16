@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./db.js"; // Import de la connexion DB
 import complet from './completbac/mekody.js';
+import completer from './completbac/contact.js';
 
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(
 // Middleware pour parser JSON
 app.use(express.json());
 app.use('/api/mekody', complet);
+app.use('/api/contact', completer);
 // 📄 Route racine
 app.get("/", (req, res) => {
   res.send("✅ Serveur backend en marche");
